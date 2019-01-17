@@ -52,4 +52,15 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPassword($token));
     }
+
+    // 用户与微博是一对多关系
+    public function statuses()
+    {
+        return $this->hasMany(Status::class);
+    }
+
+    public function feed()
+    {
+        return $this->statuses()->orderBy('created_at', 'desc');
+    }
 }

@@ -36,7 +36,12 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        // 读取用户的微博内容
+        $statuses = $user->statuses()
+                         ->orderBy('created_at', 'desc')
+                         ->paginate(30);
+
+        return view('users.show', compact('user', 'statuses'));
     }
 
     public function store(Request $request)
